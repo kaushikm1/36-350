@@ -34,3 +34,27 @@ run_simulation = function (n_trials, n, p, cutoff) {
 } 
 
 run_simulation(3,c(100, 1000, 10000), c(10, 20, 50), 0.05)
+
+
+## 2d) 
+run_simulation = function (n_trials, n, p, cutoff) {
+  res = c()
+  for (i in 1:n_trials) {
+    dat = generate_data(n[i], p[i])
+    responses = dat$responses
+    covariates = dat$covariates
+    Ps = model_select(covariates, responses, cutoff)
+    res = c(res, Ps)
+  }
+  
+  save(res, file = ".RData")
+
+}
+
+
+make_plot(data) {
+  temp = load(".RData")
+  
+  return(hist(temp, main = "Histogram of P-value distributions"))
+}
+
